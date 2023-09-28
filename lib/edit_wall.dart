@@ -30,7 +30,6 @@ class _EditWallState extends State<EditWall> {
   Future<List?> getWallColors(int? wallNumber) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     colorsNumbers = jsonDecode(prefs.getString('wall$wallNumber') ?? '');
-    print('COLOR NUMBERS>${colorsNumbers}');
     return colorsNumbers;
   }
 
