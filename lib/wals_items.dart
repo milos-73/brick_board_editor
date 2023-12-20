@@ -73,7 +73,7 @@ class _WallsItemsState extends State<WallsItems> {
                           ),
                         ),
                       ),
-          SizedBox(width: MediaQuery.of(context).size.width * 0.40,
+          SizedBox(width: MediaQuery.of(context).size.width * 0.35,
           child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center,
             children: [
             Text('Board: ${widget.wallNumber! + 1}'),
@@ -84,10 +84,11 @@ class _WallsItemsState extends State<WallsItems> {
             ],
           ),
           ),
+                      SizedBox(width: MediaQuery.of(context).size.width * 0.10, child:  const Icon(Icons.drag_handle),),
                     ],
                   ),
                 ),
-              ],
+           ],
             );
           } else {
       return const CircularProgressIndicator();
