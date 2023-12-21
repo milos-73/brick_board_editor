@@ -29,6 +29,7 @@ List? wall;
 String? sharedWall;
 int bricksNumber = 0;
 int breakingBricksNumber = 0;
+int noBreakingBricksNumber = 0;
 int savedBricksCount = 0;
 
 class _ReorderableWallsItemsState extends State<ReorderableWallsItems> {
@@ -79,6 +80,25 @@ class _ReorderableWallsItemsState extends State<ReorderableWallsItems> {
     return bricksNumber;
   }
 
+  Future<int> countNoBreakingBricks(List wall) async {
+
+    var countNoBreakingBricks = 0;
+    for(var x in wall) {
+      for (var y in x){
+        if (y > 93 && y < 99) {
+          countNoBreakingBricks = countNoBreakingBricks + 1;
+        }
+      }
+    }
+    noBreakingBricksNumber = countNoBreakingBricks;
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setInt('noBreakingBrickCountOnWall${widget.wallNumber}', countNoBreakingBricks);
+
+
+    return bricksNumber;
+  }
+
   Future<int> getBricksNumber(int wallNumber) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     savedBricksCount = prefs.getInt('brickCountOnWall${widget.wallNumber}') ?? 0;
@@ -107,6 +127,7 @@ class _ReorderableWallsItemsState extends State<ReorderableWallsItems> {
         if (snapshot.hasData) {
           countBricks(snapshot.data!);
           countBreakingBricks(snapshot.data!);
+          countNoBreakingBricks(snapshot.data!);
 
           return Padding(
             padding: const EdgeInsets.all(8.0),
@@ -143,7 +164,7 @@ class _ReorderableWallsItemsState extends State<ReorderableWallsItems> {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 5,right: 5),
-                          child: Text('NoBreaking: $breakingBricksNumber'),
+                          child: Text('NoBreaking: $noBreakingBricksNumber'),
                         ),
                       ],),
                        Column(children: [
