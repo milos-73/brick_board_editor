@@ -15,14 +15,14 @@ import 'created_wall_builder.dart';
 import 'edit_wall.dart';
 
 
-class WallsItems extends StatefulWidget {
+class ReorderableWallsItems extends StatefulWidget {
 
   final int? wallNumber;
 
-  const WallsItems({super.key, this.wallNumber});
+  const ReorderableWallsItems({super.key, this.wallNumber});
 
   @override
-  State<WallsItems> createState() => _WallsItemsState();
+  State<ReorderableWallsItems> createState() => _ReorderableWallsItemsState();
 }
 
 List? wall;
@@ -30,7 +30,7 @@ String? sharedWall;
 int bricksNumber = 0;
 int savedBricksCount = 0;
 
-class _WallsItemsState extends State<WallsItems> {
+class _ReorderableWallsItemsState extends State<ReorderableWallsItems> {
 
   getWallData(int? wallNumber) async {
 
@@ -95,16 +95,16 @@ class _WallsItemsState extends State<WallsItems> {
                     Padding(
                       padding: const EdgeInsets.only(left:10),
                       child: SizedBox(width: MediaQuery.of(context).size.width * 0.47,
-                        child: GridView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: 220,
-                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 11, childAspectRatio: 2),
-                          itemBuilder: (context, index) => CreatedWallBuilder(index, snapshot.data),
-                        ),
+                        // child: GridView.builder(
+                        //   shrinkWrap: true,
+                        //   physics: const NeverScrollableScrollPhysics(),
+                        //   itemCount: 220,
+                        //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 11, childAspectRatio: 2),
+                        //   itemBuilder: (context, index) => CreatedWallBuilder(index, snapshot.data),
+                        // ),
                       ),
                     ),
-                    SizedBox(width: MediaQuery.of(context).size.width * 0.40,
+                    SizedBox(width: MediaQuery.of(context).size.width * 0.35,
                       child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text('Board: ${widget.wallNumber! + 1}'),
@@ -116,6 +116,8 @@ class _WallsItemsState extends State<WallsItems> {
                         ],
                       ),
                     ),
+                    SizedBox(width: MediaQuery.of(context).size.width * 0.10,
+                        child: const Icon(Icons.drag_handle)),
                   ],
                 ),
               ),
