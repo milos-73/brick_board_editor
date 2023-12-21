@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:grid_maker_bricks/hex_color.dart';
 import 'package:grid_maker_bricks/provider_color.dart';
+import 'package:grid_maker_bricks/reorderable_list_of_walls.dart';
 import 'package:grid_maker_bricks/walls.dart';
 import 'package:provider/provider.dart';
 
@@ -55,9 +56,10 @@ class _MyHomePageState extends State<MyHomePage> {
           padding: const EdgeInsets.only(right: 10,bottom: 5),
           child: Row(mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Consumer<BrickColorNumber>(builder: (context, value, child){
-                return Text('Bricks: ${value.bricksCount}', style: const TextStyle(color: Colors.white70),);}),
-
+              // Consumer<BrickColorNumber>(builder: (context, value, child){
+              //   return Text('Bricks: ${value.bricksCount}', style: const TextStyle(color: Colors.white70),);}),
+              ElevatedButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => const ReorderableListWalls()));},
+                  style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),backgroundColor: HexColor(('#2E5902'))),child: const Text('Order', style: TextStyle(color: Colors.white70),)),
 
               const SizedBox(width: 15,),
               ElevatedButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => const ListWalls()));},
@@ -113,6 +115,10 @@ class _MyHomePageState extends State<MyHomePage> {
                         },
                             style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),backgroundColor: HexColor(('#193C40'))),child: const Text('Reset', style: TextStyle(color: Colors.white70),)),
                       )],),
+                    Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center ,children: [
+                      Consumer<BrickColorNumber>(builder: (context, value, child){
+                        return Text('Bricks: ${value.bricksCount}', style: const TextStyle(color: Colors.black54),);}),
+                    ],),
                     Column(children: [
                       SizedBox(width: 100, height: 40,
                         child: ElevatedButton(onPressed: (){

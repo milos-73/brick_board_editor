@@ -20,6 +20,7 @@ class _ListWallsState extends State<ListWalls> {
   SharedPreferences? prefs;
   int? wallsCount;
   List wallNumbersIndexList = [];
+  List reversedWallNumbersIndexList = [];
   bool wallIndexExists = false;
 
   Future<void> loadPrefs() async {
@@ -39,6 +40,7 @@ class _ListWallsState extends State<ListWalls> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.containsKey('wallNumbersIndexList')){
       wallNumbersIndexList = await jsonDecode(prefs.getString('wallNumbersIndexList') ?? '');
+      reversedWallNumbersIndexList = wallNumbersIndexList.reversed.toList();
       //print('Existing wallNumbersIndexList: $wallNumbersIndexList}');
     }else{
       //print('wallsCount: ${wallsCount}');
@@ -71,27 +73,14 @@ class _ListWallsState extends State<ListWalls> {
       title: const Text('List of boards',style: TextStyle(color: Colors.white70,)), backgroundColor:HexColor('#214001'),),backgroundColor: HexColor('#ffe7d9'),
       body:
       wallsCount != null || wallsCount != 0  ?
-      ReorderableListView.builder(
+      ListView.builder(
           itemCount: wallNumbersIndexList.length,
           itemBuilder:(context,index){
             //final String productName = wallNumbersIndexList[index].toString();
-            return SizedBox(height:MediaQuery.of(context).size.height * 0.25,key: ValueKey(wallNumbersIndexList[index].toString()),
-                child: WallsItems(wallNumber: wallNumbersIndexList[index]),);
+            return SizedBox(height:MediaQuery.of(context).size.height * 0.25,key: ValueKey(reversedWallNumbersIndexList[index].toString()),
+                child: WallsItems(wallNumber: reversedWallNumbersIndexList[index]),);
           },
-        onReorder: (int oldIndex, int newIndex) async {
-
-        setState(()  {
-          if (oldIndex < newIndex) {
-            newIndex -= 1;
-          }
-          final element = wallNumbersIndexList.removeAt(oldIndex);
-          wallNumbersIndexList.insert(newIndex, element);
-
-        });
-        await setIndexInNewOrder();
-      },
-
-      )
+        )
           : const Center(child: Text('No walls created yet'))
       );
 

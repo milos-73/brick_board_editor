@@ -172,27 +172,39 @@ class BrickWalls {
   Future<void> countNumberOfBricks(context) async {
 
     var i = 0;
+    var breaking = 0;
+    var noBreak = 0;
     for(var x in brickList) {
       for (var y in x){
         if (y != 0) {
           i = i + 1;
         }
+        if (y == 100){
+          breaking = breaking +1;
+        }
       }
     }
     Provider.of<BrickColorNumber>(context, listen: false).countBricks(i);
+    Provider.of<BrickColorNumber>(context, listen: false).countBreakingBricks(breaking);
   }
 
   Future<void> countNumberOfBricksOnEditedWall(context) async {
 
     var i = 0;
+    var breaking = 0;
+    var noBreak = 0;
     for(var x in editedBrickList) {
       for (var y in x){
         if (y != 0) {
           i = i + 1;
         }
+        if (y == 100){
+          breaking = breaking +1;
+        }
       }
     }
     Provider.of<BrickColorNumber>(context, listen: false).countBricksOnEditedWall(i);
+    Provider.of<BrickColorNumber>(context, listen: false).countBreakingBricks(breaking);
   }
 
 

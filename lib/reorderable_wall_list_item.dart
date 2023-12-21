@@ -28,6 +28,7 @@ class ReorderableWallsItems extends StatefulWidget {
 List? wall;
 String? sharedWall;
 int bricksNumber = 0;
+int breakingBricksNumber = 0;
 int savedBricksCount = 0;
 
 class _ReorderableWallsItemsState extends State<ReorderableWallsItems> {
@@ -54,6 +55,25 @@ class _ReorderableWallsItemsState extends State<ReorderableWallsItems> {
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setInt('brickCountOnWall${widget.wallNumber}', count);
+
+
+    return bricksNumber;
+  }
+
+  Future<int> countBreakingBricks(List wall) async {
+
+    var countBreakingBricks = 0;
+    for(var x in wall) {
+      for (var y in x){
+        if (y == 100) {
+          countBreakingBricks = countBreakingBricks + 1;
+        }
+      }
+    }
+    breakingBricksNumber = countBreakingBricks;
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setInt('breakingBrickCountOnWall${widget.wallNumber}', countBreakingBricks);
 
 
     return bricksNumber;
@@ -86,42 +106,59 @@ class _ReorderableWallsItemsState extends State<ReorderableWallsItems> {
 
         if (snapshot.hasData) {
           countBricks(snapshot.data!);
+          countBreakingBricks(snapshot.data!);
 
-          return Row(mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(width: MediaQuery.of(context).size.width,
-                child: Row( mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left:10),
-                      child: SizedBox(width: MediaQuery.of(context).size.width * 0.47,
-                        // child: GridView.builder(
-                        //   shrinkWrap: true,
-                        //   physics: const NeverScrollableScrollPhysics(),
-                        //   itemCount: 220,
-                        //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 11, childAspectRatio: 2),
-                        //   itemBuilder: (context, index) => CreatedWallBuilder(index, snapshot.data),
-                        // ),
-                      ),
-                    ),
-                    SizedBox(width: MediaQuery.of(context).size.width * 0.35,
-                      child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text('Board: ${widget.wallNumber! + 1}'),
-                          Text('Bricks: $bricksNumber'),
-                          const SizedBox(height: 10,),
-                          ElevatedButton(onPressed: () async { Provider.of<BrickColorNumber>(context, listen: false).index = 0; getBricksNumber(widget.wallNumber!).then((value) => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => EditWall(wallNumber: widget.wallNumber, bricksCount: savedBricksCount))));},style: ElevatedButton.styleFrom(backgroundColor: HexColor('#193C40')) ,child: const Text('Edit', style: TextStyle(color: Colors.white70),),),
-                          IconButton(onPressed: () async {Share.share(await shareWallData(widget.wallNumber));}, icon: FaIcon(FontAwesomeIcons.share, color: HexColor('#A62B1F'),))
-                          //ElevatedButton(onPressed: () {  },style: ElevatedButton.styleFrom(backgroundColor: Colors.amber) ,child: const Text('Delete'),),
-                        ],
-                      ),
-                    ),
-                    SizedBox(width: MediaQuery.of(context).size.width * 0.10,
-                        child: const Icon(Icons.drag_handle)),
-                  ],
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(width: MediaQuery.of(context).size.width *0.95,
+                  child: Row( mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      //Padding(
+                        //padding: const EdgeInsets.only(left:10),
+                        //child: SizedBox(width: MediaQuery.of(context).size.width * 0.47,
+                          // child: GridView.builder(
+                          //   shrinkWrap: true,
+                          //   physics: const NeverScrollableScrollPhysics(),
+                          //   itemCount: 220,
+                          //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 11, childAspectRatio: 2),
+                          //   itemBuilder: (context, index) => CreatedWallBuilder(index, snapshot.data),
+                          // ),
+                       // ),
+                      //),
+                      Column(children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text('${widget.wallNumber!}'),
+                        ),
+                      ],),
+                      Column(children: [
+                        Text('Bricks: $bricksNumber'),
+                      ],),
+                      Column(children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 5,right: 5),
+                          child: Text('Breaking: $breakingBricksNumber'),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 5,right: 5),
+                          child: Text('NoBreaking: $breakingBricksNumber'),
+                        ),
+                      ],),
+                       Column(children: [
+                         ElevatedButton(onPressed: () async { Provider.of<BrickColorNumber>(context, listen: false).index = 0; getBricksNumber(widget.wallNumber!).then((value) => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => EditWall(wallNumber: widget.wallNumber, bricksCount: savedBricksCount))));},style: ElevatedButton.styleFrom(backgroundColor: HexColor('#193C40')) ,child: const Text('Edit', style: TextStyle(color: Colors.white70),),),
+                       ],),
+                      Column(children: [
+                        IconButton(onPressed: () async {Share.share(await shareWallData(widget.wallNumber));}, icon: FaIcon(FontAwesomeIcons.share, color: HexColor('#A62B1F'),))
+                      ],),
+                      SizedBox(width: MediaQuery.of(context).size.width * 0.10,
+                          child: const Icon(Icons.drag_handle)),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           );
         } else {
           return const CircularProgressIndicator();

@@ -3,8 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:grid_maker_bricks/reordable_wall_list_item.dart';
-import 'package:grid_maker_bricks/wals_items.dart';
+import 'package:grid_maker_bricks/reorderable_wall_list_item.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'hex_color.dart';
@@ -76,7 +75,7 @@ class _ReorderableListWallsState extends State<ReorderableListWalls> {
           itemCount: wallNumbersIndexList.length,
           itemBuilder:(context,index){
             //final String productName = wallNumbersIndexList[index].toString();
-            return SizedBox(height:MediaQuery.of(context).size.height * 0.25,key: ValueKey(wallNumbersIndexList[index].toString()),
+            return SizedBox(key: ValueKey(wallNumbersIndexList[index].toString()),
               child: ReorderableWallsItems(wallNumber: wallNumbersIndexList[index]),);
           },
           onReorder: (int oldIndex, int newIndex) async {
