@@ -151,13 +151,13 @@ class _ReorderableWallsItemsState extends State<ReorderableWallsItems> {
                       Column(children: [
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text('${widget.wallNumber!}'),
+                          child: Text('${widget.wallNumber!+1}'),
                         ),
                       ],),
                       Column(children: [
                         Text('Bricks: $bricksNumber'),
                       ],),
-                      Column(children: [
+                      Column(mainAxisAlignment: MainAxisAlignment.center,crossAxisAlignment: CrossAxisAlignment.start,children: [
                         Padding(
                           padding: const EdgeInsets.only(left: 5,right: 5),
                           child: Text('Breaking: $breakingBricksNumber'),
@@ -167,7 +167,7 @@ class _ReorderableWallsItemsState extends State<ReorderableWallsItems> {
                           child: Text('NoBreaking: $noBreakingBricksNumber'),
                         ),
                       ],),
-                       Column(children: [
+                       Column(crossAxisAlignment: CrossAxisAlignment.end,children: [
                          ElevatedButton(onPressed: () async { Provider.of<BrickColorNumber>(context, listen: false).index = 0; getBricksNumber(widget.wallNumber!).then((value) => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => EditWall(wallNumber: widget.wallNumber, bricksCount: savedBricksCount))));},style: ElevatedButton.styleFrom(backgroundColor: HexColor('#193C40')) ,child: const Text('Edit', style: TextStyle(color: Colors.white70),),),
                        ],),
                       Column(children: [

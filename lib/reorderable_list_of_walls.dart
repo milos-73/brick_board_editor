@@ -1,12 +1,16 @@
 import 'dart:convert';
+import 'dart:io';
+
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:grid_maker_bricks/reorderable_wall_list_item.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'hex_color.dart';
+import 'list_of_walls.dart';
 
 class ReorderableListWalls extends StatefulWidget {
 
@@ -57,6 +61,21 @@ class _ReorderableListWallsState extends State<ReorderableListWalls> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('wallNumbersIndexList', jsonEncode(wallNumbersIndexList));
   }
+  
+  Future<void> printWallList() async {
+
+    List wallListIndex;
+    String levelsList = '';
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    wallListIndex = await jsonDecode(prefs.getString('wallNumbersIndexList') ?? '');
+    for (var wall in wallListIndex){
+      String? level = prefs.getString('wall$wall');
+      levelsList = '$levelsList,\n ${level!}';
+    }
+    //final Directory appDocumentsDir = await getApplicationDocumentsDirectory();
+    Share.share(levelsList);
+    print(levelsList);
+  }
 
   @override
   void initState() {
@@ -67,6 +86,25 @@ class _ReorderableListWallsState extends State<ReorderableListWalls> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(appBar: AppBar(
+      actions: [
+        Padding(
+          padding: const EdgeInsets.only(right: 10,bottom: 5),
+          child: Row(mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Consumer<BrickColorNumber>(builder: (context, value, child){
+              //   return Text('Bricks: ${value.bricksCount}', style: const TextStyle(color: Colors.white70),);}),
+              ElevatedButton(onPressed: () async {await printWallList();},
+                  style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),backgroundColor: HexColor(('#2E5902'))),child: const Text('Order', style: TextStyle(color: Colors.white70),)),
+
+              // const SizedBox(width: 15,),
+              // ElevatedButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => const ListWalls()));},
+              //     style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),backgroundColor: HexColor(('#2E5902'))),child: const Text('List', style: TextStyle(color: Colors.white70),)),
+            ],
+          ),
+        )
+      ],
+
+
       leading: IconButton(onPressed: (){Navigator.pop(context);} , icon: const FaIcon(FontAwesomeIcons.arrowLeft,color: Colors.white70,)),
       title: const Text('List of boards',style: TextStyle(color: Colors.white70,)), backgroundColor:HexColor('#214001'),),backgroundColor: HexColor('#ffe7d9'),
         body:
