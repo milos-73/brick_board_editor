@@ -53,6 +53,7 @@ List editedBrickList =
 ];
 
 int? wallNumber;
+List wallNumbersIndexList = [];
 
 class BrickWalls {
 
@@ -90,9 +91,16 @@ class BrickWalls {
 
     var prefs = await SharedPreferences.getInstance();
     wallNumber = prefs.getInt('wallNumber') ?? 0;
-    prefs.setString('wall$wallNumber', jsonEncode(brickList));
+    prefs.setString('wall${wallNumber!+1}', jsonEncode(brickList));
     prefs.setInt('wallNumber', wallNumber! + 1);
-    jsonDecode(prefs.getString('wall$wallNumber') ?? '');
+    jsonDecode(prefs.getString('wall${wallNumber!+1}') ?? '');
+
+    //print('${wallNumber}');
+
+    wallNumbersIndexList = await jsonDecode(prefs.getString('wallNumbersIndexList') ?? '');
+    wallNumbersIndexList.add(wallNumber! + 1);
+    prefs.setString('wallNumbersIndexList', jsonEncode(wallNumbersIndexList));
+
   }
 
   Future<void> saveEditedWall(int wallNumber) async {
@@ -105,9 +113,13 @@ class BrickWalls {
 
     var prefs = await SharedPreferences.getInstance();
     wallNumber = prefs.getInt('wallNumber') ?? 0;
-    prefs.setString('wall$wallNumber', jsonEncode(editedBrickList));
+    prefs.setString('wall${wallNumber!+1}', jsonEncode(editedBrickList));
     prefs.setInt('wallNumber', wallNumber! + 1);
-    jsonDecode(prefs.getString('wall$wallNumber') ?? '');
+    jsonDecode(prefs.getString('wall${wallNumber!+1}') ?? '');
+
+    wallNumbersIndexList = await jsonDecode(prefs.getString('wallNumbersIndexList') ?? '');
+    wallNumbersIndexList.add(wallNumber! + 1);
+    prefs.setString('wallNumbersIndexList', jsonEncode(wallNumbersIndexList));
   }
 
   void resetWall(){

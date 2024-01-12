@@ -109,7 +109,7 @@ class _ReorderableWallsItemsState extends State<ReorderableWallsItems> {
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     sharedWall = prefs.getString('wall${widget.wallNumber}') ?? "";
-    int sharedWallNumber = wallNumber! + 1;
+    int sharedWallNumber = wallNumber!;
     return 'WALL: $sharedWallNumber  ${sharedWall!}';
   }
 
@@ -151,7 +151,7 @@ class _ReorderableWallsItemsState extends State<ReorderableWallsItems> {
                       Column(children: [
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text('${widget.wallNumber!+1}'),
+                          child: Text('${widget.wallNumber!}'),
                         ),
                       ],),
                       Column(children: [
@@ -164,7 +164,7 @@ class _ReorderableWallsItemsState extends State<ReorderableWallsItems> {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 5,right: 5),
-                          child: Text('NoBreaking: $noBreakingBricksNumber'),
+                          child: Text('NoBreak: $noBreakingBricksNumber'),
                         ),
                       ],),
                        Column(crossAxisAlignment: CrossAxisAlignment.end,children: [

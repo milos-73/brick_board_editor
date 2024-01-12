@@ -69,7 +69,7 @@ class _WallsItemsState extends State<WallsItems> {
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     sharedWall = prefs.getString('wall${widget.wallNumber}') ?? "";
-    int sharedWallNumber = wallNumber! + 1;
+    int sharedWallNumber = wallNumber!;
     return 'WALL: $sharedWallNumber  ${sharedWall!}';
   }
 
@@ -107,7 +107,7 @@ class _WallsItemsState extends State<WallsItems> {
                     SizedBox(width: MediaQuery.of(context).size.width * 0.40,
                       child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text('Board: ${widget.wallNumber! + 1}'),
+                          Text('Board: ${widget.wallNumber!}'),
                           Text('Bricks: $bricksNumber'),
                           const SizedBox(height: 10,),
                           ElevatedButton(onPressed: () async { Provider.of<BrickColorNumber>(context, listen: false).index = 0; getBricksNumber(widget.wallNumber!).then((value) => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => EditWall(wallNumber: widget.wallNumber, bricksCount: savedBricksCount))));},style: ElevatedButton.styleFrom(backgroundColor: HexColor('#193C40')) ,child: const Text('Edit', style: TextStyle(color: Colors.white70),),),

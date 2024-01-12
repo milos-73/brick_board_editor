@@ -74,7 +74,7 @@ class _ReorderableListWallsState extends State<ReorderableListWalls> {
     }
     //final Directory appDocumentsDir = await getApplicationDocumentsDirectory();
     Share.share(levelsList);
-    print(levelsList);
+    //print(levelsList);
   }
 
   @override
@@ -113,6 +113,9 @@ class _ReorderableListWallsState extends State<ReorderableListWalls> {
           itemCount: wallNumbersIndexList.length,
           itemBuilder:(context,index){
             //final String productName = wallNumbersIndexList[index].toString();
+            //print('index: $index');
+            //print('wallNumbersIndexList.length:${wallNumbersIndexList.length}');
+            //print('wallNumbersIndexList[index]: ${wallNumbersIndexList[index]}');
             return SizedBox(key: ValueKey(wallNumbersIndexList[index].toString()),
               child: ReorderableWallsItems(wallNumber: wallNumbersIndexList[index]),);
           },

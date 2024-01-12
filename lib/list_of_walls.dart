@@ -41,7 +41,8 @@ class _ListWallsState extends State<ListWalls> {
     if (prefs.containsKey('wallNumbersIndexList')){
       wallNumbersIndexList = await jsonDecode(prefs.getString('wallNumbersIndexList') ?? '');
       reversedWallNumbersIndexList = wallNumbersIndexList.reversed.toList();
-      //print('Existing wallNumbersIndexList: $wallNumbersIndexList}');
+     //print('Existing wallNumbersIndexList: $wallNumbersIndexList}');
+     //print('wallNumbersIndexList length: ${wallNumbersIndexList.length}');
     }else{
       //print('wallsCount: ${wallsCount}');
 
@@ -73,6 +74,7 @@ class _ListWallsState extends State<ListWalls> {
       title: const Text('List of boards',style: TextStyle(color: Colors.white70,)), backgroundColor:HexColor('#214001'),),backgroundColor: HexColor('#ffe7d9'),
       body:
       wallsCount != null || wallsCount != 0  ?
+
       ListView.builder(
           itemCount: wallNumbersIndexList.length,
           itemBuilder:(context,index){
