@@ -87,6 +87,23 @@ class BrickWalls {
     editedBrickList[row][column] = color;
   }
 
+  Future<void> saveWallWithProvidedNumber(int wallNumber) async {
+
+    var prefs = await SharedPreferences.getInstance();
+    //wallNumber = prefs.getInt('wallNumber') ?? 0;
+    prefs.setString('wall$wallNumber', jsonEncode(brickList));
+    prefs.setInt('wallNumber', wallNumber);
+    jsonDecode(prefs.getString('wall$wallNumber') ?? '');
+
+    //print('${wallNumber}');
+
+    wallNumbersIndexList = await jsonDecode(prefs.getString('wallNumbersIndexList') ?? '');
+    wallNumbersIndexList.add(wallNumber);
+    prefs.setString('wallNumbersIndexList', jsonEncode(wallNumbersIndexList));
+
+  }
+
+
   Future<void> saveWall() async {
 
     var prefs = await SharedPreferences.getInstance();
@@ -102,6 +119,14 @@ class BrickWalls {
     prefs.setString('wallNumbersIndexList', jsonEncode(wallNumbersIndexList));
 
   }
+
+  Future<String> getWallNumber() async {
+    var prefs = await SharedPreferences.getInstance();
+    wallNumber = prefs.getInt('wallNumber') ?? 0;
+    int newWallNumber = wallNumber!+1;
+    print('newWallNumber: $newWallNumber');
+    return newWallNumber.toString();
+      }
 
   Future<void> saveEditedWall(int wallNumber) async {
 
