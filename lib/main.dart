@@ -67,16 +67,11 @@ Future<dynamic> showCapturedWidget(
     context: context,
     builder: (context) => Scaffold(
       appBar: AppBar(
-        title: Text("Captured widget screenshot"),
+        title: const Text("Captured widget screenshot"),
       ),
       body: Center(child: Image.memory(capturedImage)),
     ),
   );}
-
-
-
-
-
 
 class _MyHomePageState extends State<MyHomePage> {
 
@@ -98,11 +93,11 @@ class _MyHomePageState extends State<MyHomePage> {
               // Consumer<BrickColorNumber>(builder: (context, value, child){
               //   return Text('Bricks: ${value.bricksCount}', style: const TextStyle(color: Colors.white70),);}),
               ElevatedButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => const ReorderableListWalls()));},
-                  style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),backgroundColor: HexColor(('#2E5902'))),child: const Text('Order', style: TextStyle(color: Colors.white70),)),
-
-              const SizedBox(width: 15,),
-              ElevatedButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => const ListWalls()));},
                   style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),backgroundColor: HexColor(('#2E5902'))),child: const Text('List', style: TextStyle(color: Colors.white70),)),
+
+              // const SizedBox(width: 15,),
+              // ElevatedButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => const ListWalls()));},
+              //     style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),backgroundColor: HexColor(('#2E5902'))),child: const Text('List', style: TextStyle(color: Colors.white70),)),
             ],
           ),
         )
@@ -165,58 +160,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         SizedBox(width: 100, height: 40,
                           child: ElevatedButton(onPressed: () async {
 
-                            // await screenshotController
-                            //     .captureFromWidget(const WallScreenshot(wallNumber: 13,))
-                            //     .then((capturedImage) async {
-                            //   await showCapturedWidget(context,capturedImage);
-                            // });
 
-
-                            // screenshotController
-                            //     .captureFromLongWidget(
-                            //   InheritedTheme.captureAll(
-                            //     context,
-                            //     const Material(
-                            //       child: WallScreenshot(),
-                            //     ),
-                            //   ),
-                            //   delay: const Duration(milliseconds: 100),
-                            //   context: context, constraints: BoxConstraints(maxHeight: 1000, maxWidth: 1000)
-                            //
-                            //
-                            //   ///
-                            //   /// Additionally you can define constraint for your image.
-                            //   ///
-                            //   // constraints: BoxConstraints(
-                            //   // maxHeight: 1000,
-                            //   // maxWidth: 1000,
-                            //  //)
-                            // )
-                            //     .then((capturedImage) {
-                            //   showCapturedWidget(context, capturedImage);
-                            // });
-
-
-
-
-
-
-                // screenshotController.capture(delay: Duration(milliseconds: 20)).then((capturedImage) async {showCapturedWidget(context, capturedImage!);}).catchError((onError) {
-                // print(onError);
-                // });
-
-                // final directory = (await getApplicationDocumentsDirectory()).path;
-                // final fileName =  await brickWalls.getWallNumber();
-                // var path = directory;
-                // screenshotController.capture().then((value) => ((Uint8List image) {
-                //   setState(() {
-                //     _imageFile = image;
-                //   });
-                // }));
-                //print("app_path: $path");
-                //print("file NAME: $fileName");
-
-                            //await brickWalls.saveWall().then((value) => Navigator.push(context, MaterialPageRoute(builder: (context) => WallScreenshot(wallNumber: actualWallNumber))));
                             await brickWalls.saveWallWithProvidedNumber(actualWallNumber ?? 1).then((value) => Navigator.push(context, MaterialPageRoute(builder: (context) => WallScreenshot(wallNumber: actualWallNumber))));
                 var snackWallSaved = SnackBar(content: const Text('Your wall is saved now.'),backgroundColor: HexColor('#2E5902'), elevation: 10,behavior: SnackBarBehavior.floating,margin: const EdgeInsets.all(5), );
                             if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(snackWallSaved);

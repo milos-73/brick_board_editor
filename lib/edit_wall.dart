@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:grid_maker_bricks/provider_color.dart';
+import 'package:grid_maker_bricks/reorderable_list_of_walls.dart';
 import 'package:grid_maker_bricks/walls.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -53,14 +54,16 @@ class _EditWallState extends State<EditWall> {
             padding: const EdgeInsets.only(right: 15),
             child: Column(mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Text('Wall: ${widget.wallNumber}', style: const TextStyle(color: Colors.white70),),
                 Text('Bricks: ${value.bricksEditedWallCount}', style: const TextStyle(color: Colors.white70),),
+
               ],
             ),
           );}),
 
       ],
         title: const Text('Edit Wall', style: TextStyle(color: Colors.white70),),
-        leading: IconButton(onPressed: (){Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ListWalls()));} , icon: const FaIcon(FontAwesomeIcons.arrowLeft, color: Colors.white70,size: 15,)),
+        leading: IconButton(onPressed: (){Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ReorderableListWalls()));} , icon: const FaIcon(FontAwesomeIcons.arrowLeft, color: Colors.white70,size: 15,)),
       ),
       body: SingleChildScrollView(
         child: Padding(

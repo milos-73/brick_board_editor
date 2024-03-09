@@ -80,6 +80,7 @@ class _ReorderableListWallsState extends State<ReorderableListWalls> {
   @override
   void initState() {
     super.initState();
+    imageCache.clear();
     wallsCountNumber().then((value) => wallIndexList());
   }
 
@@ -91,10 +92,13 @@ class _ReorderableListWallsState extends State<ReorderableListWalls> {
           padding: const EdgeInsets.only(right: 10,bottom: 5),
           child: Row(mainAxisAlignment: MainAxisAlignment.center,
             children: [
+
+              // ElevatedButton(onPressed: (){Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ReorderableListWalls()));},
+              //     style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),backgroundColor: HexColor(('#2E5902'))),child: const Text('Refresh', style: TextStyle(color: Colors.white70),)),
               // Consumer<BrickColorNumber>(builder: (context, value, child){
               //   return Text('Bricks: ${value.bricksCount}', style: const TextStyle(color: Colors.white70),);}),
               ElevatedButton(onPressed: () async {await printWallList();},
-                  style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),backgroundColor: HexColor(('#2E5902'))),child: const Text('Order', style: TextStyle(color: Colors.white70),)),
+                  style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),backgroundColor: HexColor(('#2E5902'))),child: const Text('Export', style: TextStyle(color: Colors.white70),)),
 
               // const SizedBox(width: 15,),
               // ElevatedButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => const ListWalls()));},

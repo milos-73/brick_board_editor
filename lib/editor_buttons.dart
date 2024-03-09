@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:grid_maker_bricks/hex_color.dart';
 import 'package:grid_maker_bricks/provider_color.dart';
+import 'package:grid_maker_bricks/reorderable_list_of_walls.dart';
+import 'package:grid_maker_bricks/reorderable_wall_list_item.dart';
 import 'package:grid_maker_bricks/reset_editor.dart';
 import 'package:grid_maker_bricks/walls.dart';
 import 'package:provider/provider.dart';
@@ -63,7 +65,7 @@ class EditButtons extends StatelessWidget {
                 SizedBox(width: 130, height: 40,
                   child: ElevatedButton(onPressed: (){
 
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ListWalls()));
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ReorderableListWalls()));
                   },style: ElevatedButton.styleFrom(
                     backgroundColor: HexColor('#D96941'),
                   ), child: const Text('Cancel',style: TextStyle(color: Colors.white70),),),
